@@ -5,6 +5,14 @@
 
 This is my README file for the GMIT module Machine Learning and Statistics.
 
+#### How to run the web service
+
+```bash
+$ export FLASK_APP=web-service.py
+$ flask run
+ * Running on http://127.0.0.1:5000/
+```
+
 ***
 
 This project has been implemented in a Jupyter Notebook [1] using the Python programming language [1]. Jupyter Notebook comes as part of the part the Anaconda [3] distribution of Python. Jupyter software is also available from the Jupyter website [1].
