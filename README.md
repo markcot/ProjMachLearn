@@ -5,14 +5,6 @@
 
 This is my README file for the GMIT module Machine Learning and Statistics.
 
-#### How to run the web service
-
-```bash
-$ export FLASK_APP=web-service.py
-$ flask run
- * Running on http://127.0.0.1:5000/
-```
-
 ***
 
 This project has been implemented in a Jupyter Notebook [1] using the Python programming language [1]. Jupyter Notebook comes as part of the part the Anaconda [3] distribution of Python. Jupyter software is also available from the Jupyter website [1].
@@ -25,7 +17,40 @@ When opening the **"Project.ipynb"** file, it is a good idea to use the command 
 
 ***
 
-This project involved estimating power output of wind turbine based on a machine learning model built from a wind "wind speed" versus "power output" dataset called "powerproduction.txt" included in this repository.
+This project involved estimating power output of wind turbine based on a machine learning model built from a wind "wind speed" versus "power output" dataset called **"powerproduction.txt"** included in this repository.
+
+A Keras [5] model for estimating the power output curve is created and trained in the **"Project.ipynb"** file based on the **"powerproduction.txt"** input data. This model is saved to **"my_model.JSON"** and **"my_model.H5"** files.
+
+The Keras model is loaded into a python Flask web server application called **"web-service.py"** for use with the static html page **"Index.html"**.
+
+The software requirements to run the web service are included in the file **"requirements.txt"**.
+
+***
+
+#### How to run the web service
+
+#### In Linux environment
+```bash
+export FLASK_APP=web-service.py
+export FLASK_ENV=development
+python3 -m flask run
+ * Running on http://127.0.0.1:5000/
+```
+
+#### In Windows environment
+```bash
+set FLASK_APP=web-service.py
+set FLASK_ENV=development
+python -m flask run
+ * Running on http://127.0.0.1:5000/
+```
+
+#### In Docker environment
+```bash
+docker build . -t web-service-image
+docker run --name web-service-container -d -p 5000:5000 web-service-image
+ * Running on http://127.0.0.1:5000/
+```
 
 ***
 
@@ -38,3 +63,5 @@ This project involved estimating power output of wind turbine based on a machine
 [3] Anaconda; Anaconda Inc.; https://www.anaconda.com/
 
 [4] GitHub; GitHub Inc.; https://github.com/
+
+[5] Keras; https://keras.io/

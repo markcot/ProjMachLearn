@@ -7,6 +7,30 @@ from silence_tensorflow import silence_tensorflow
 silence_tensorflow()
 import tensorflow.keras as kr
 
+# Flask app. Code adapted from
+# https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application and
+# GMIT Data Represtation Project
+app = fl.Flask(__name__, static_url_path='', static_folder='staticpages')
+
+# Add root route.
+@app.route('/')
+def index():
+   # return "hello"
+   return app.send_static_file('index.html')
+
+# Add number route.
+# curl http://127.0.0.1:5000/api/number/5
+@app.route('/api/number/<speed>')
+def number(speed):
+   s = float(speed)
+   # get power from power curve model
+   return {"power" : power_output(s)}
+
+# # Add list route.
+# @app.route('/api/list/<speeds>')
+# def number_list():
+#    return {"value": power_output(speeds)}
+
 # Load Keras model from saved files "my_model.json" & "my_model.h5". Code adapted from
 # https://machinelearningmastery.com/save-load-keras-deep-learning-models/
 # load json and create model
@@ -29,63 +53,18 @@ def power_output(windspeeds):
    """
    # Set the cut off wind speeds
    minWS, maxWS = 3, 24.5
-      
-   # If input is a list with a number as the first element
-   if type(windspeeds) == list:
-      #print("List")
-      # Result list
-      res = []
-      # For each item in the list
-      for i in range(len(windspeeds)):
-         #print(windspeeds[i])
-         # Check if each item in the list is a number
-         if type(windspeeds[i]) == str:
-               #print("Error")
-               return [-1] * len(windspeeds)
-         # If wind speed is inside the cut off levels
-         if windspeeds[i] > minWS and windspeeds[i] < maxWS:
-               # Set resultant power output to 0
-               ws = np.array([windspeeds[i]])
-               po = round(model.predict(ws/wsF)[0][0]*poF, 3)
-               res.append(po)
-         else:
-               # Otherwise set value to zero
-               res.append(0)
-      return res
-   
-   # If input is a single number
-   elif type(windspeeds) == float or type(windspeeds) == int:
-      #print("Float/Int")
-      # If wind speed is inside the cut off levels
-      if windspeeds > minWS and windspeeds < maxWS:
-         ws = np.array([windspeeds])
-         return round(model.predict(ws/wsF)[0][0]*poF, 3)
-      else:
-         # Otherwise set value to zero
-         return 0
-      
+
+   # If wind speed is inside the cut off levels
+   if windspeeds > minWS and windspeeds < maxWS:
+      ws = np.array([windspeeds])
+      return round(model.predict(ws/wsF)[0][0]*poF, 3)
    else:
       #print("Error")
-      return -1
+      return 0
 
 # Function test
-#print(power_output(10))
+# print(power_output(10))
 
-# Flask app. Code adapted from
-# https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application
-app = fl.Flask(__name__)
-
-# Add root route.
-@app.route('/')
-def home():
-   return app.send_static_file('index.html')
-
-# Add number route.
-@app.route('/api/number/<speed>')
-def number():
-   return {"value": power_output(speed)}
-
-# Add list route.
-@app.route('/api/list/<speeds>')
-def number_list():
-   return {"value": fl.jsonify(power_output(speeds))}
+# Run in debug mode
+if __name__ == "__main__":
+   app.run(debug=True)
