@@ -1,12 +1,22 @@
 # Import python modules for use in web service
 import flask as fl
-from flask import Flask
 import numpy as np
+# Silence tensorflowstartup warnings. Code adapted from
+# https://stackoverflow.com/a/65215118
+from silence_tensorflow import silence_tensorflow
+silence_tensorflow()
 import tensorflow.keras as kr
 
-# import Keras model from saved folder "my_model". Code adapted from
-# https://www.tensorflow.org/guide/keras/save_and_serialize
-model = kr.models.load_model("my_model")
+# Load Keras model from saved files "my_model.json" & "my_model.h5". Code adapted from
+# https://machinelearningmastery.com/save-load-keras-deep-learning-models/
+# load json and create model
+json_file = open('my_model.json', 'r')
+loaded_model_json = json_file.read()
+json_file.close()
+model = kr.models.model_from_json(loaded_model_json)
+# load weights into new model
+model.load_weights("my_model.h5")
+#print("Loaded model from disk")
 
 # Copy of variables and function from Project.ipynb
 # Set normalisation factors
@@ -59,11 +69,11 @@ def power_output(windspeeds):
       return -1
 
 # Function test
-# print(power_output(10))
+#print(power_output(10))
 
-# Flask app. Cade adapted from
+# Flask app. Code adapted from
 # https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application
-app = Flask(__name__)
+app = fl.Flask(__name__)
 
 # Add root route.
 @app.route('/')
@@ -71,11 +81,11 @@ def home():
    return app.send_static_file('index.html')
 
 # Add number route.
-@app.route('/api/number/<float:speed>')
-def uniform():
+@app.route('/api/number/<speed>')
+def number():
    return {"value": power_output(speed)}
 
 # Add list route.
-@app.route('/api/list/<list:speeds>')
-def normal():
-   return {"value": power_output(speeds)}
+@app.route('/api/list/<speeds>')
+def number_list():
+   return {"value": fl.jsonify(power_output(speeds))}
