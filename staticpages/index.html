@@ -47,7 +47,9 @@
       -->
 
       <script>
-         // Adapted from stack overflow posts.
+         // When button is clicked, use the entered speed to estimate the power output
+		 // Code adapted from https://stackoverflow.com/a/7685819. &
+		 // https://www.sitepoint.com/ajaxjquery-getjson-simple-example/
          $("#number-button").click(function(e) {
             var speed = document.getElementById('number-input').value;
             host = window.location.origin
