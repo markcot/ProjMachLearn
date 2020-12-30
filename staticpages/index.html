@@ -20,23 +20,46 @@
    </head>
 
    <body class="p-3 mb-2 bg-secondary text-white">
-      <h2 class="h2">Power Output Calculator</h2>
-      <div class="container">
-         <div class="row">
-            <div class="col-sm">
-               <input class="form-control" id="number-input" type="number" placeholder="enter single wind speed here..">
-            </div>
+      <h2 class="h2" style="width:400px; margin:0 auto;">Power Output Calculator</h2>
+
+      <br />
+
+      <div class="container" style="width:600px; margin:0 auto;">
+         <table class="table table-dark">
+            <thead class="thead-dark">
+               <tr>
+                  <td style="width:200px;">
+                     <input class="form-control" id="number-input" type="number" placeholder="enter wind speed">
+                  </td>
+                  <td style="text-align:center; width:200px;">
+                     <button type="button" class="btn btn-success" id="number-button">Get Power Output</button>
+                  </td>
+                  <td style="width:200px;">
+                     <input class="form-control" id="number-output" type="text" placeholder="power output" readonly>
+                  </td>
+               </tr>
+            </thead>
+         </table>
+
+         <br />
+
+         <p class="text-left">
+            This application is a wind turbine power output calculator. The power output in kilowatts (kW) is estimated for an inputted wind speed in metres/second (m/s).
+         </p>
+
+         <p class="text-left">
+            The estimation is based on a machine learning model that correlates empirical data of known power output of the a given
+            wind turbine. The original dataset contained in the file "powerproduction.txt" contained 500 data points. After an analyse and research into turbine of the data, 49 of these data points with 0kW power were excluded and one duplicate data point were omitted fro the machine learning model.
+         </p>
+
+         <p class="text-left">
+            The power output calculator is set with 3m/s cut-in wind speed and a 24.5m/s cut-out wind speed.
+         </p>
+
+         <div class="text-center">
+            <img src="https://github.com/markcot/ProjMachLearn/tree/main/staticpages/ML_training_data_versus_model_prediction.JPG" class="rounded" alt="training data versus model prediction image">
          </div>
-         <div class="row">
-            <div class="col-sm">
-               <button type="button" class="btn btn-success" id="number-button" >Get Power Output</button>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-sm">
-               <input class="form-control" id="number-output" type="text" placeholder="power output here.." readonly>
-            </div>
-         </div>
+
       </div>
 
       <script>

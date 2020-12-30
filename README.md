@@ -28,6 +28,7 @@ The software requirements to run the web service are included in the file **"req
 ***
 
 #### How to run the web service
+Code adapted from https://flask.palletsprojects.com/en/1.1.x/quickstart/
 
 #### In Linux environment
 ```bash
