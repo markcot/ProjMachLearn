@@ -23,11 +23,29 @@ A Keras [5] model for estimating the power output curve is created and trained i
 
 The Keras model is loaded into a python Flask web server application called **"web-service.py"** for use with the static html page **"Index.html"**.
 
-The software requirements to run the web service are included in the file **"requirements.txt"**.
-
 ***
 
-#### How to run the web service
+### Virtual environment
+Conda was used to create a localhost Virtual Environment (venvMLP) for running the server. The following Windows command line python commands can be to create venvMLP, install and save packages for venvMLP, set the flask_app server and server mode, run the server, stop the server and finally deactivate venvMLP.
+
+* λ conda create --name venvMLP python=3.8
+* λ conda activate venvMLP
+* (venvMLP)λ pip install flask
+* (venvMLP)λ pip install tensorflow
+* (venvMLP)λ pip install silence-tensorflow
+* (venvMLP)λ pip install numpy==1.19.2
+* (venvMLP)λ pip freeze > requirements.txt
+* (venvMLP)λ set FLASK_APP=web-server.py
+* (venvMLP)λ set FLASK_ENV=development
+* (venvMLP)λ python -m flask run
+* Running on http://127.0.0.1:5000/
+* Crtl+c
+* (venvMLP)λ conda deactivate
+
+The package requirements can also be install from the list in the file **"requirements.txt"** using the venv command
+* (venv)λ pip install -r requirements.txt
+
+### How to run the web service
 Code adapted from https://flask.palletsprojects.com/en/1.1.x/quickstart/
 
 #### In Linux environment

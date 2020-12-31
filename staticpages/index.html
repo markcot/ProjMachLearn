@@ -20,7 +20,7 @@
    </head>
 
    <body class="p-3 mb-2 bg-secondary text-white">
-      <h2 class="h2" style="width:400px; margin:0 auto;">Power Output Calculator</h2>
+      <h2 class="h2" style="width:400px; margin:0 auto;">Power Output Prediction</h2>
 
       <br />
 
@@ -29,13 +29,13 @@
             <thead class="thead-dark">
                <tr>
                   <td style="width:200px;">
-                     <input class="form-control" id="number-input" type="number" placeholder="enter wind speed">
+                     <input class="form-control" id="wind-input" type="number" placeholder="enter wind speed">
                   </td>
                   <td style="text-align:center; width:200px;">
-                     <button type="button" class="btn btn-success" id="number-button">Get Power Output</button>
+                     <button type="button" class="btn btn-success" id="power-button">Get Power Output</button>
                   </td>
                   <td style="width:200px;">
-                     <input class="form-control" id="number-output" type="text" placeholder="power output" readonly>
+                     <input class="form-control" id="power-output" type="text" placeholder="power output" readonly>
                   </td>
                </tr>
             </thead>
@@ -44,20 +44,22 @@
          <br />
 
          <p class="text-left">
-            This application is a wind turbine power output calculator. The power output in kilowatts (kW) is estimated for an inputted wind speed in metres/second (m/s).
+            The purpose of this application is to make wind turbine power output predictions. The power output in kilowatts (kW) is estimated for an inputted wind speed in metres/second (m/s).
          </p>
 
          <p class="text-left">
-            The estimation is based on a machine learning model that correlates empirical data of known power output of the a given
-            wind turbine. The original dataset contained in the file "powerproduction.txt" contained 500 data points. After an analyse and research into turbine of the data, 49 of these data points with 0kW power were excluded and one duplicate data point were omitted fro the machine learning model.
+            The predicted estimate of power output is based on a Keras machine learning model that correlates a training dataset of known power output for measured wind speeds. The original dataset contained in the file "powerproduction.txt" contained 500 data points. After undertaking analyse and research into wind turbines and the dataset, 49 of these data points with 0kW power output were excluded and one duplicate data point was omitted prior to constructing the machine learning model. A plot of the training dataset points and the model prediction estimates is know in the plot below.
          </p>
 
          <p class="text-left">
-            The power output calculator is set with 3m/s cut-in wind speed and a 24.5m/s cut-out wind speed.
+            The power output prediction includes a 3m/s cut-in wind speed and a 24.5m/s cut-out wind speed limits to model real life wind turbine operation procedures for efficient power output and safety precautions during high winds.
          </p>
+
+         <br />
 
          <div class="text-center">
-            <img src="https://github.com/markcot/ProjMachLearn/tree/main/staticpages/ML_training_data_versus_model_prediction.JPG" class="rounded" alt="training data versus model prediction image">
+            <!-- Code adapted from https://github.com/mkdocs/mkdocs/issues/1757 -->
+            <img src="https://github.com/markcot/ProjMachLearn/blob/main/staticpages/ML_training_data_versus_model_prediction.JPG?raw=true" class="img-fluid" alt="training data versus model prediction image" />
          </div>
 
       </div>
@@ -66,13 +68,13 @@
          // When button is clicked, use the entered speed to estimate the power output
 		   // Code adapted from https://stackoverflow.com/a/7685819. &
 		   // https://www.sitepoint.com/ajaxjquery-getjson-simple-example/
-         $("#number-button").click(function(e) {
-            var speed = document.getElementById('number-input').value;
+         $("#power-button").click(function(e) {
+            var speed = document.getElementById('wind-input').value;
             host = window.location.origin
             // console.log(typeof speed)
                
-            $.getJSON("/api/number/"+speed, function(data) {
-               $('#number-output').val(data.power);
+            $.getJSON("/api/power/"+speed, function(data) {
+               $('#power-output').val(data.power);
                console.log("Wind speed " + speed + " gives power output of " + data.power);
             });
 
