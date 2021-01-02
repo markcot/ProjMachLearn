@@ -26,14 +26,13 @@ The Keras model is loaded into a python Flask web server application called **"w
 ***
 
 ### Virtual environment
-Conda was used to create a localhost Virtual Environment (venvMLP) for running the server. The following Windows command line python commands can be to create venvMLP, install and save packages for venvMLP, set the flask_app server and server mode, run the server, stop the server and finally deactivate venvMLP.
+Conda was used to create a localhost Virtual Environment (venvMLP) for running the server. The following Windows command line python commands can be to create venvMLP, install and save packages for venvMLP, set the flask_app server and server mode, run the server, stop the server and finally deactivate venvMLP. Testing of the flask server showed that there appears to be a conflict with the current version of tensorflow version 2.4.0 and the FLASK_APP. As such I had to downgrade tensorflow to version 2.3.0 with associated packages including numpy.
 
 * λ conda create --name venvMLP python=3.8
 * λ conda activate venvMLP
-* (venvMLP)λ pip install flask
-* (venvMLP)λ pip install tensorflow
-* (venvMLP)λ pip install silence-tensorflow
-* (venvMLP)λ pip install numpy==1.19.2
+* (venvMLP)λ pip install flask==1.1.2
+* (venvMLP)λ pip install tensorflow==2.3.0
+* (venvMLP)λ pip install silence-tensorflow==1.1.1
 * (venvMLP)λ pip freeze > requirements.txt
 * (venvMLP)λ set FLASK_APP=web-server.py
 * (venvMLP)λ set FLASK_ENV=development
@@ -45,18 +44,13 @@ Conda was used to create a localhost Virtual Environment (venvMLP) for running t
 The package requirements can also be install from the list in the file **"requirements.txt"** using the venv command
 * (venv)λ pip install -r requirements.txt
 
+***
+
 ### How to run the web service
+
+#### In Windows virtual environment
+
 Code adapted from https://flask.palletsprojects.com/en/1.1.x/quickstart/
-
-#### In Linux environment
-```bash
-export FLASK_APP=web-service.py
-export FLASK_ENV=development
-python3 -m flask run
- * Running on http://127.0.0.1:5000/
-```
-
-#### In Windows environment
 ```bash
 set FLASK_APP=web-service.py
 set FLASK_ENV=development
@@ -64,7 +58,19 @@ python -m flask run
  * Running on http://127.0.0.1:5000/
 ```
 
-#### In Docker environment
+#### In Windows virtual environment
+
+```bash
+export FLASK_APP=web-service
+export FLASK_ENV=development
+python3 -m flask run
+ * Running on http://127.0.0.1:5000/
+```
+
+#### In Docker environment (linux base)
+
+During the DockerFile testing, it was noted that ubuntu:16.04 and ubuntu:18.04 use python version 2.7. To use python version 3, the base ubuntu:20.04 image had to used. This change also required the Linux base python commands to be changed to python3 and pip3.
+
 ```bash
 docker build . -t web-service-image
 docker run --name web-service-container -d -p 5000:5000 web-service-image
