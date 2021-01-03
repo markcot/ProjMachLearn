@@ -7,40 +7,37 @@ from silence_tensorflow import silence_tensorflow
 silence_tensorflow()
 import tensorflow.keras as kr
 
-# Load Keras model from saved files "my_model.json" & "my_model.h5". Code adapted from
-# https://machinelearningmastery.com/save-load-keras-deep-learning-models/
-# load json and create model
-json_file = open('my_model.json', 'r')
-loaded_model_json = json_file.read()
-json_file.close()
-model = kr.models.model_from_json(loaded_model_json)
-# load weights into new model
-model.load_weights("my_model.h5")
-#print("Loaded model from disk")
+# Load Keras model from saved files "my_model.h5". Code adapted from
+# https://www.christopherlovell.co.uk/blog/2016/04/27/h5py-intro.html
+model = kr.models.load_model("my_model.h5")
+# print("Loaded model from disk")
 
-# Copy of variables and function from Project.ipynb
-# Set normalisation factors
-wsF = 25
-poF = 120
 # Function to predict power output based on inputted wind speeds
-def power_output(windspeeds):
-   """ Function to predict power output based on inputted wind speeds
-      Acceptable inputs include numbers or a list of numbers
+# Variant of function from Project.ipynb
+def power_output(windspeed):
+   """ Function to predict power output based on inputted wind speed
+      Acceptable input is a single number
    """
    # Set the cut off wind speeds
    minWS, maxWS = 3, 24.5
-
-   # If wind speed is inside the cut off levels
-   if windspeeds > minWS and windspeeds < maxWS:
-      ws = np.array([windspeeds])
+   # Set normalisation factors
+   wsF, poF = 25, 120
+   # If wind speed is in allowable range for cut in/off
+   if windspeed > minWS and windspeed < maxWS:
+      ws = np.array([windspeed])
+      # Estimate power output
       return round(model.predict(ws/wsF)[0][0]*poF, 3)
    else:
-      #print("Error")
+      # Otherwise set power output to zero
       return 0
 
 # Function test. Also initialise the function.
 test = power_output(10)
-# print(f"power output for wind speed 10 is: {test}")
+# print(f"Wind speed: 10 gives power: {test}")
+
+# ws_arr_test = [1, 3, 3.001, 5, 10, 20, 24, 24.499, 24.5, 27]
+# for i in ws_arr_test:
+#    print(f"Wind speed: {i} gives power: {power_output(i)}")
 
 # Flask app. Code adapted from
 # https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application and
