@@ -1,86 +1,103 @@
 <!DOCTYPE HTML>
 <html lang="en">
 
-   <head>
-      <!-- Required meta tags -->
-      <title>Power</title>
+<head>
+   <!-- Required meta tags -->
+   <title>Power</title>
 
-      <meta charset="utf-8">
-      <meta name="description" content="estimate wind turbine power based on wind speed">
-      <meta name="keywords" content="wind, turbine, speed, power">
-      <meta name="author" content="Mark Cotter">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta charset="utf-8">
+   <meta name="description" content="estimate wind turbine power based on wind speed">
+   <meta name="keywords" content="wind, turbine, speed, power">
+   <meta name="author" content="Mark Cotter">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-      <!-- Bootstrap CSS. Code from https://getbootstrap.com/ -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-      <!-- JavaScript Bundle with Popper. Code from https://getbootstrap.com/ -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-      <!-- full uncompressed jQuery. Code from https://code.jquery.com/ -->
-      <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-   </head>
+   <!-- Bootstrap CSS. Code from https://getbootstrap.com/ -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+   <!-- JavaScript Bundle with Popper. Code from https://getbootstrap.com/ -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+      crossorigin="anonymous"></script>
+   <!-- full uncompressed jQuery. Code from https://code.jquery.com/ -->
+   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"></script>
+</head>
 
-   <body class="p-3 mb-2 bg-secondary text-white">
-      <h2 class="h2" style="width:400px; margin:0 auto;">Power Output Prediction</h2>
+<body class="p-3 mb-2 bg-secondary text-white">
+   <h2 class="h2" style="width:400px; margin:0 auto;">Power Output Prediction</h2>
+
+   <br />
+
+   <div class="container" style="width:600px; margin:0 auto;">
+      <table class="table table-dark">
+         <thead class="thead-dark">
+            <tr>
+               <td style="width:200px;">
+                  <input class="form-control" id="wind-input" type="number" placeholder="enter wind speed">
+               </td>
+               <td style="text-align:center; width:200px;">
+                  <button type="button" class="btn btn-success" id="power-button">Get Power Output</button>
+               </td>
+               <td style="width:200px;">
+                  <input class="form-control" id="power-output" type="text" placeholder="power output" readonly>
+               </td>
+            </tr>
+         </thead>
+      </table>
 
       <br />
 
-      <div class="container" style="width:600px; margin:0 auto;">
-         <table class="table table-dark">
-            <thead class="thead-dark">
-               <tr>
-                  <td style="width:200px;">
-                     <input class="form-control" id="wind-input" type="number" placeholder="enter wind speed">
-                  </td>
-                  <td style="text-align:center; width:200px;">
-                     <button type="button" class="btn btn-success" id="power-button">Get Power Output</button>
-                  </td>
-                  <td style="width:200px;">
-                     <input class="form-control" id="power-output" type="text" placeholder="power output" readonly>
-                  </td>
-               </tr>
-            </thead>
-         </table>
+      <p class="text-left">
+         The purpose of this application is to estimate wind turbine power output in kilowatts (kW) for an inputted wind speed
+         in metres/second (m/s).
+      </p>
+      
+      <p class="text-left">
+         The estimate of power output is based on a Keras machine learning model that correlates a training dataset of known
+         power outputs with their associated known wind speed inputs. The original full dataset for the project in the file
+         "powerproduction.txt" contained 500 data points.
+      </p>
+      
+      <p class="text-left">
+         After undertaking analyse and research into wind turbines and the dataset, 49 of these data points with zero kW power
+         output were excluded and one duplicate data point was omitted to clean the dataset prior to constructing the machine
+         learning model. A random sample of 70% of the cleaned dataset was used for the training dataset. This dataset and the
+         resulting power output estimates from the model are shown in the plot below.
+      </p>
+      
+      <p class="text-left">
+         A 3 m/s cut-in wind speed lower limit and a 24.5 m/s cut-out wind speed upper limit have been set to correspond with
+         real life wind turbine operation procedures for efficient power output and safety precautions during high winds. As
+         such wind speeds of 3 m/s or less and 24.5 m/s or greater result in zero kW power outputs.
+      </p>
 
-         <br />
+      <br />
 
-         <p class="text-left">
-            The purpose of this application is to make wind turbine power output predictions. The power output in kilowatts (kW) is estimated for an inputted wind speed in metres/second (m/s).
-         </p>
-
-         <p class="text-left">
-            The predicted estimate of power output is based on a Keras machine learning model that correlates a training dataset of known power output for measured wind speeds. The original dataset contained in the file "powerproduction.txt" contained 500 data points. After undertaking analyse and research into wind turbines and the dataset, 49 of these data points with 0kW power output were excluded and one duplicate data point was omitted prior to constructing the machine learning model. A plot of the training dataset points and the model prediction estimates is know in the plot below.
-         </p>
-
-         <p class="text-left">
-            The power output prediction includes a 3m/s cut-in wind speed and a 24.5m/s cut-out wind speed limits to model real life wind turbine operation procedures for efficient power output and safety precautions during high winds.
-         </p>
-
-         <br />
-
-         <div class="text-center">
-            <!-- Code adapted from https://github.com/mkdocs/mkdocs/issues/1757 -->
-            <img src="https://github.com/markcot/ProjMachLearn/blob/main/staticpages/ML_training_data_versus_model_prediction.JPG?raw=true" class="img-fluid" alt="training data versus model prediction image" />
-         </div>
-
+      <div class="text-center">
+         <!-- Code adapted from https://github.com/mkdocs/mkdocs/issues/1757 -->
+         <img
+            src="https://github.com/markcot/ProjMachLearn/blob/main/staticpages/ML_training_data_versus_model_prediction.JPG?raw=true"
+            class="img-fluid" alt="training data versus model prediction image" />
       </div>
 
-      <script>
-         // When button is clicked, use the entered speed to estimate the power output
-		   // Code adapted from https://stackoverflow.com/a/7685819. &
-		   // https://www.sitepoint.com/ajaxjquery-getjson-simple-example/
-         $("#power-button").click(function(e) {
-            var speed = document.getElementById('wind-input').value;
-            host = window.location.origin
-            // console.log(typeof speed)
-               
-            $.getJSON("/api/power/"+speed, function(data) {
-               $('#power-output').val(data.power);
-               console.log("Wind speed " + speed + " gives power output of " + data.power);
-            });
+   </div>
 
-            
+   <script>
+      // When button is clicked, use the entered speed to estimate the power output
+      // Code adapted from https://stackoverflow.com/a/7685819. &
+      // https://www.sitepoint.com/ajaxjquery-getjson-simple-example/
+      $("#power-button").click(function (e) {
+         e.preventDefault();
+         var speed = document.getElementById('wind-input').value;
+         $.getJSON("/api/power/" + speed, function (data) {
+            $('#power-output').val(data.power);
+            console.log("Wind speed " + speed + " gives power output of " + data.power);
          });
-      </script>
 
-   </body>
+
+      });
+   </script>
+
+</body>
+
 </html>

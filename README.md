@@ -61,7 +61,7 @@ Code adapted from https://flask.palletsprojects.com/en/1.1.x/quickstart/
 ```bash
 set FLASK_APP=web-service.py
 set FLASK_ENV=development
-python -m flask run
+flask run
  * Running on http://127.0.0.1:5000/
 ```
 
