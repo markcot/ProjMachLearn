@@ -26,7 +26,7 @@ COPY ./requirements.txt /app/requirements.txt
 WORKDIR /app
 
 # Install python requirements with options to deal with intermitent connection issues
-# NOTE: If issues cached versions occurs add
+# NOTE: If issues with cached versions of module occurs add
 #     --no-cache-dir
 # at the end of the line below:
 RUN pip3 install -r requirements.txt --default-timeout=1000
