@@ -6,10 +6,11 @@ import numpy as np
 from silence_tensorflow import silence_tensorflow
 silence_tensorflow()
 import tensorflow.keras as kr
+import h5py
 
 # Load Keras model from saved files "my_model.h5". Code adapted from
 # https://www.christopherlovell.co.uk/blog/2016/04/27/h5py-intro.html
-model = kr.models.load_model("my_model.h5")
+model = kr.models.load_model("./my_model.h5")
 # print("Loaded model from disk")
 
 # Function to predict power output based on inputted wind speeds
@@ -22,14 +23,19 @@ def power_output(windspeed):
    minWS, maxWS = 3, 24.5
    # Set normalisation factors
    wsF, poF = 25, 120
-   # If wind speed is in allowable range for cut in/off
-   if windspeed > minWS and windspeed < maxWS:
-      ws = np.array([windspeed])
-      # Estimate power output
-      return round(model.predict(ws/wsF)[0][0]*poF, 3)
-   else:
-      # Otherwise set power output to zero
-      return 0
+   # Check if model predict is working
+   try:
+      # If wind speed is in allowable range for cut in/off
+      if windspeed > minWS and windspeed < maxWS:
+         ws = np.array([windspeed])
+         # Estimate power output
+         return round(model.predict(ws/wsF)[0][0]*poF, 3)
+      else:
+         # Otherwise set power output to zero
+         return 0
+   except:
+      # Return error
+      return -1
 
 # Function test. Also initialise the function.
 test = power_output(10)
