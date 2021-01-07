@@ -17,10 +17,10 @@ Having the required Jupyter and Python software installed on your PC, you can op
 
 Known value pairs of "wind speed" and associated "power output" are listed in the dataset. To estimate power output of the wind turbine based on an inputted wind speed, a Keras [5] machine learning model has been trained in the **"Project.ipynb"** file to approximate the wind turbine power output curve. The structure and state of this trained model is saved to the **"my_model.h5"** file included in the repository.
 
-The Keras model is loaded into a python Flask web server application called **"web-service.py"** for use with the html user interface html page **"Index.html"**.
+The Keras model is loaded into a Python Flask web server application called **"web-service.py"** for use with the html user interface html page **"Index.html"**.
 
 ## Local Virtual Environment
-Anaconda Python (conda) was used on a Windows machine to create a localhost Virtual Environment (venvMLP) for running the server locally. The following Windows command line pip and python commands can be used to create venvMLP, install and save packages for venvMLP, set the flask_app server and server mode, run the server, stop the server and finally deactivate venvMLP. Testing of the flask server showed that there appears to be a conflict with the current version of tensorflow version 2.4.0 and the FLASK_APP. As such tensorflow had to be downgraded to version 2.3.0 including its associated Python packages including numpy.
+Anaconda Python (conda) was used on a Windows machine to create a localhost Virtual Environment (venvMLP) for running the server locally. The following Windows command line pip and Python commands can be used to create venvMLP, install and save packages for venvMLP, set the flask_app server and server mode, run the server, stop the server and finally deactivate venvMLP. Testing of the flask server showed that there appears to be a conflict with the current version of tensorflow version 2.4.0 and the FLASK_APP. As such tensorflow had to be downgraded to version 2.3.0 including its associated Python packages including numpy.
 
 ```bash
 λ conda create --name venvMLP python=3.8
@@ -69,7 +69,7 @@ flask run
 
 ### Creating and running in a Docker container environment (linux base)
 NOTE that to construct the docker linux virtual machine image, the time taken to download update and install the base image and requirements can take up to approximately two hours on the first run. After the initial docker layers are built, the docker image can be reconstructed more quickly if only the later image layers are changed.
-When the container set to run and while the Keras model is being initialised, the server may required five or six minutes of waiting time before the web service user interface html page is ready to serve. Afterward this initial wait, the web-service operates normally.
+When the container is set to run and while the Keras model is being initialised, the server may required five or six minutes of waiting time before the web service user interface html page is ready to serve. Afterward this initial wait, the web-service operates normally.
 
 ```bash
 docker build . -t web-service-image
@@ -83,7 +83,7 @@ docker run --name web-service-container -d -p 5000:5000 web-service-image
 
 [2] Jupyter; Project Jupyter; https://jupyter.org/
 
-[3] Python;  Python Software Foundation; https://www.python.org/
+[3] Python; Python Software Foundation; https://www.python.org/
 
 [4] Anaconda; Anaconda Inc.; https://www.anaconda.com/
 
