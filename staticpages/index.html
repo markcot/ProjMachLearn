@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-   <!-- Required meta tags -->
+   <!-- Meta tags -->
    <title>Power</title>
 
    <meta charset="utf-8">
@@ -53,22 +53,22 @@
       </p>
       
       <p class="text-left">
-         The estimate of power output is based on a Keras machine learning model that correlates a training dataset of known
+         The estimate of power output is based on a trained Keras machine learning model that correlates a training dataset of known
          power outputs with their associated known wind speed inputs. The base dataset for the project in the file
          "powerproduction.txt" contains 500 data points.
       </p>
       
       <p class="text-left">
-         After undertaking analyse and research into wind turbines and the dataset, 49 of these data points with zero kW power
-         output were excluded and one duplicate data point was omitted to clean the dataset prior to constructing the machine
-         learning model. A random sample of 70% of the cleaned dataset was used for the training dataset. This dataset and the
-         resulting power output estimates from the model are shown in the plot below.
+         After undertaking analyse and research into wind turbines and the dataset, 49 of these data point pairs with zero kW power
+         output were excluded and one duplicate data point pair was omitted to clean the dataset prior to constructing the machine
+         learning model. A random sample of 70% of the cleaned dataset was used for the training dataset with the remaining 30% used
+         for model testing purposes. The training dataset and the resulting model power output estimates are shown in the plot below.
       </p>
       
       <p class="text-left">
          The power output prediction tool includes a lower limit cut-in wind speed and a upper limit cut-out wind speed to correspond with
-         real life wind turbine operation procedures for efficient power output and safety precautions during high winds. As
-         such, for wind speeds of 3 m/s or less and 24.5 m/s or greater the prediction tool estimates power outputs of zero kW.
+         real life wind turbine operational procedures for efficient power output and safety precautions during high winds. As
+         such, for wind speeds of 3 m/s or less and 24.5 m/s or greater, the prediction tool estimates power outputs of zero kW.
       </p>
 
       <br />
@@ -83,7 +83,7 @@
    </div>
 
    <script>
-      // When button is clicked, use the entered speed to estimate the power output
+      // When button is clicked, use the entered wind speed to estimate the power output
       // Code adapted from https://stackoverflow.com/a/7685819. &
       // https://www.sitepoint.com/ajaxjquery-getjson-simple-example/
       $("#power-button").click(function (e) {
@@ -93,8 +93,6 @@
             $('#power-output').val(data.power);
             console.log("Wind speed " + speed + " gives power output of " + data.power);
          });
-
-
       });
    </script>
 

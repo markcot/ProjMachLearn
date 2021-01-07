@@ -19,22 +19,22 @@ def power_output(windspeed):
    """ Function to predict power output based on inputted wind speed
       Acceptable input is a single number
    """
-   # Set the cut off wind speeds
+   # Set the cut in/cut off wind speeds
    minWS, maxWS = 3, 24.5
    # Set normalisation factors
    wsF, poF = 25, 120
    # Check if model predict is working
    try:
-      # If wind speed is in allowable range for cut in/off
+      # If wind speed is in allowable range for cut in/cut off
       if windspeed > minWS and windspeed < maxWS:
          ws = np.array([windspeed])
          # Estimate power output
          return round(model.predict(ws/wsF)[0][0]*poF, 3)
       else:
-         # Otherwise set power output to zero
+         # If windspeed is outside wind speed range, set power output to zero
          return 0
    except:
-      # Return error
+      # Otherwise return an error
       return -1
 
 # Function test. Also initialise the function.
